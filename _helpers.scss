@@ -1,0 +1,5 @@
+@mixin writing-mode($dir,$dirOPT:""){
+	-webkit-writing-mode: $dir; 
+        -ms-writing-mode: unquote($dirOPT); 
+            writing-mode: $dir;
+}
