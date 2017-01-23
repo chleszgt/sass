@@ -12,6 +12,7 @@ nav{
 		margin-top: 200px;
 		li{
 			font-style: italic;
+			text-decoration: underline;
 		}
 	}
 }
@@ -21,6 +22,16 @@ h1{
 	@include writing-mode(vertical-rl,tb-rl);
 }
 
+h2{
+	width: 400px;
+	font-size: 60px;
+}
+.split-lines-outer {
+    overflow-y: hidden;
+}
+.split-lines-inner {
+    display: inline-block;
+}
 
 
 .green{

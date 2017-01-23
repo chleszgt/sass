@@ -4,10 +4,13 @@
   <meta charset="utf-8">
   <title>Titre de la page</title>
   <link rel="stylesheet" href="output.css">
-  <script src="script.js"></script>
 </head>
 <body>
 	<h1>Titre</h1>
+
+	<h2>Ceci est le développement de mon titre</h2>
+
+
 	<p class="green">Lorem ipsum</p>
 	<nav>
 	  	<ul>
@@ -16,5 +19,88 @@
 	  		<li>Page C</li>
 	  	</ul>
 	</nav>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
+  	<script type="text/javascript">
+	  	var SplitInLines = class SplitInLines {
+		  constructor(el) {
+		    this.el = el;
+		    this.init();
+		  }
+
+		  init() {
+		    this.lines = [];
+		    this.chars = [];
+
+		    this.text = this.el.textContent;
+		    this.empty();
+
+		    this.text.split('').forEach((text) => {
+		      const span = document.createElement('span');
+		      span.textContent = text;
+
+		      this.chars.push(span);
+		      this.el.appendChild(span);
+		    });
+
+		    this.parseChars();
+		    this.writeLines();
+		  }
+
+		  parseChars() {
+		    let oldTop = null;
+		    let index = -1;
+
+		    this.chars.forEach((span) => {
+		      const top = span.getBoundingClientRect().top;
+
+		      if (top !== oldTop) {
+		        this.lines.push([]);
+		        index++;
+		      }
+
+		      this.lines[index].push(span.textContent);
+		      oldTop = top;
+		    });
+		  }
+
+		  writeLines() {
+		    this.empty();
+
+		    this.lines.forEach((line) => {
+		      const outerWrapper = document.createElement('div');
+		      const wrapper = document.createElement('span');
+
+		      outerWrapper.classList.add('split-lines-outer');
+		      wrapper.classList.add('split-lines-inner');
+
+		      wrapper.textContent = line.join('');
+
+		      outerWrapper.appendChild(wrapper);
+		      this.el.appendChild(outerWrapper);
+		    });
+		  }
+
+		  empty() {
+		    this.el.textContent = '';
+		  }
+
+		  clear() {
+		    this.el.textContent = this.text;
+		  }
+		}
+
+		if (typeof module !== 'undefined') {
+		  module.exports = SplitInLines;
+		}
+
+
+
+		var el    = document.querySelector('h2');
+		var split = new SplitInLines(el);
+		var lines = document.querySelectorAll('.split-lines-inner');
+
+		var tl    = TweenMax.fromTo(lines, 0.5, { alpha: 0, yPercent: 100}, { alpha: 1, yPercent: 0, onComplete: () => {split.clear(); }})
+  	</script>
 </body>
 </html>
